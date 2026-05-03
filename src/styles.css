@@ -1,6 +1,10 @@
 body {
   margin: 0;
-  font-family: Inter, Arial, sans-serif;
-  background: #020617;
-  color: #e2e8f0;
+  font-family: Inter, Avenir, 'Segoe UI', Arial, sans-serif;
+  background: radial-gradient(circle at top right, #2d1035 0%, #080b14 45%, #05070d 100%);
+  color: #f4f7ff;
+}
+
+* {
+  box-sizing: border-box;
 }

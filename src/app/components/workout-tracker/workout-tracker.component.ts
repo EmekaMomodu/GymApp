@@ -22,8 +22,8 @@ export class WorkoutTrackerComponent implements OnInit {
   ) {
     this.form = this.fb.nonNullable.group({
       exercise: ['', Validators.required],
-      weight: [0, [Validators.required, Validators.min(0)]],
-      reps: [1, [Validators.required, Validators.min(1)]]
+      weight: [45, [Validators.required, Validators.min(0)]],
+      reps: [8, [Validators.required, Validators.min(1)]]
     });
   }
 
@@ -35,12 +35,30 @@ export class WorkoutTrackerComponent implements OnInit {
     return this.sets.reduce((sum, set) => sum + set.weight * set.reps, 0);
   }
 
+  get avgReps(): number {
+    if (!this.sets.length) return 0;
+    const totalReps = this.sets.reduce((sum, set) => sum + set.reps, 0);
+    return Math.round(totalReps / this.sets.length);
+  }
+
+  get uniqueExercises(): number {
+    return new Set(this.sets.map((set) => set.exercise.toLowerCase())).size;
+  }
+
+  get recentSets(): WorkoutSet[] {
+    return [...this.sets].slice(-5).reverse();
+  }
+
+  addTemplate(exercise: string, weight: number, reps: number): void {
+    this.form.patchValue({ exercise, weight, reps });
+  }
+
   addSet(): void {
     if (this.form.invalid) return;
 
     const value = this.form.getRawValue();
     const set: WorkoutSet = {
-      exercise: value.exercise,
+      exercise: value.exercise.trim(),
       weight: value.weight,
       reps: value.reps,
       performedAt: new Date().toISOString()
@@ -48,7 +66,7 @@ export class WorkoutTrackerComponent implements OnInit {
 
     this.workoutService.addSet(set).subscribe((created) => {
       this.sets = [...this.sets, created];
-      this.form.reset({ exercise: '', weight: 0, reps: 1 });
+      this.form.reset({ exercise: '', weight: 45, reps: 8 });
     });
   }
 
