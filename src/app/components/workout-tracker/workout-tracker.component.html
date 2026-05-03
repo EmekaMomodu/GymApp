@@ -1,27 +1,79 @@
 <main class="app">
-  <h1>Gym App (Angular + TypeScript)</h1>
-  <p class="subtitle">Frontend prepared for Java backend integration.</p>
+  <header class="hero">
+    <p class="eyebrow">Lyfta-inspired experience</p>
+    <h1>Gym Flow</h1>
+    <p class="subtitle">Track clean, fast, and focused sessions with a bold and modern dashboard.</p>
+  </header>
 
-  <section class="card">
-    <h2>Add Set</h2>
+  <section class="stats-grid">
+    <article class="stat-card accent">
+      <p>Sets Today</p>
+      <h2>{{ sets.length }}</h2>
+    </article>
+    <article class="stat-card">
+      <p>Total Volume</p>
+      <h2>{{ totalVolume }}</h2>
+    </article>
+    <article class="stat-card">
+      <p>Avg Reps</p>
+      <h2>{{ avgReps }}</h2>
+    </article>
+    <article class="stat-card">
+      <p>Exercises</p>
+      <h2>{{ uniqueExercises }}</h2>
+    </article>
+  </section>
+
+  <section class="card lift-card">
+    <div class="card-title-row">
+      <h2>Quick Add Set</h2>
+      <span>Live session</span>
+    </div>
+
+    <div class="templates">
+      <button type="button" (click)="addTemplate('Back Squat', 185, 5)">Back Squat</button>
+      <button type="button" (click)="addTemplate('Bench Press', 135, 8)">Bench Press</button>
+      <button type="button" (click)="addTemplate('Deadlift', 225, 5)">Deadlift</button>
+    </div>
+
     <form [formGroup]="form" (ngSubmit)="addSet()">
-      <input formControlName="exercise" placeholder="Exercise" />
+      <label>
+        Exercise
+        <input formControlName="exercise" placeholder="e.g., Pull Up" />
+      </label>
+
       <div class="row">
-        <input type="number" formControlName="weight" placeholder="Weight" />
-        <input type="number" formControlName="reps" placeholder="Reps" />
+        <label>
+          Weight
+          <input type="number" formControlName="weight" placeholder="Weight" />
+        </label>
+        <label>
+          Reps
+          <input type="number" formControlName="reps" placeholder="Reps" />
+        </label>
       </div>
-      <button type="submit">Add</button>
+
+      <button class="primary" type="submit">Add Set</button>
     </form>
   </section>
 
-  <section class="card">
-    <h2>Today</h2>
-    <p><strong>{{ sets.length }}</strong> sets · <strong>{{ totalVolume }}</strong> total volume</p>
-    <ul>
-      <li *ngFor="let set of sets">
-        {{ set.exercise }} — {{ set.weight }} × {{ set.reps }}
+  <section class="card activity-card">
+    <div class="card-title-row">
+      <h2>Recent Activity</h2>
+      <button class="secondary" (click)="clearWorkout()">Clear Day</button>
+    </div>
+
+    <ul *ngIf="recentSets.length; else emptyState">
+      <li *ngFor="let set of recentSets">
+        <div>
+          <strong>{{ set.exercise }}</strong>
+          <p>{{ set.weight }} lbs × {{ set.reps }} reps</p>
+        </div>
       </li>
     </ul>
-    <button class="secondary" (click)="clearWorkout()">Clear</button>
+
+    <ng-template #emptyState>
+      <p class="empty">No sets yet. Start with a template or log your first lift.</p>
+    </ng-template>
   </section>
 </main>
