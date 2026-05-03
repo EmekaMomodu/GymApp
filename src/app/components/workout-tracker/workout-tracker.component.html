@@ -1,0 +1,27 @@
+<main class="app">
+  <h1>Gym App (Angular + TypeScript)</h1>
+  <p class="subtitle">Frontend prepared for Java backend integration.</p>
+
+  <section class="card">
+    <h2>Add Set</h2>
+    <form [formGroup]="form" (ngSubmit)="addSet()">
+      <input formControlName="exercise" placeholder="Exercise" />
+      <div class="row">
+        <input type="number" formControlName="weight" placeholder="Weight" />
+        <input type="number" formControlName="reps" placeholder="Reps" />
+      </div>
+      <button type="submit">Add</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>Today</h2>
+    <p><strong>{{ sets.length }}</strong> sets · <strong>{{ totalVolume }}</strong> total volume</p>
+    <ul>
+      <li *ngFor="let set of sets">
+        {{ set.exercise }} — {{ set.weight }} × {{ set.reps }}
+      </li>
+    </ul>
+    <button class="secondary" (click)="clearWorkout()">Clear</button>
+  </section>
+</main>

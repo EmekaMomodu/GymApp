@@ -1,0 +1,9 @@
+.app { max-width: 760px; margin: 2rem auto; padding: 1rem; }
+.subtitle { color: #94a3b8; }
+.card { background: #1e293b; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
+form { display: grid; gap: 0.75rem; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+input { padding: 0.6rem; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #e2e8f0; }
+button { background: #22c55e; border: 0; padding: 0.6rem 0.8rem; border-radius: 8px; font-weight: 700; }
+button.secondary { background: transparent; border: 1px solid #ef4444; color: #fecaca; }
+ul { margin: 0.5rem 0; padding-left: 1.2rem; }
