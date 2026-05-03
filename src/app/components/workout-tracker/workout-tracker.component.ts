@@ -14,16 +14,18 @@ import { WorkoutSet } from '../../models/workout-set.model';
 export class WorkoutTrackerComponent implements OnInit {
   sets: WorkoutSet[] = [];
 
-  readonly form = this.fb.nonNullable.group({
-    exercise: ['', Validators.required],
-    weight: [0, [Validators.required, Validators.min(0)]],
-    reps: [1, [Validators.required, Validators.min(1)]]
-  });
+  readonly form;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly workoutService: WorkoutService
-  ) {}
+  ) {
+    this.form = this.fb.nonNullable.group({
+      exercise: ['', Validators.required],
+      weight: [0, [Validators.required, Validators.min(0)]],
+      reps: [1, [Validators.required, Validators.min(1)]]
+    });
+  }
 
   ngOnInit(): void {
     this.workoutService.getTodaySets().subscribe((sets) => (this.sets = sets));
